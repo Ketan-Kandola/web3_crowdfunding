@@ -2,5 +2,40 @@
 pragma solidity ^0.8.9;
 
 contract donation {
-    constructor() {}
+    struct Campaign{
+        address creatorAddress;
+        string title;
+        string description;
+        uint256 goalAmount;
+        uint256 deadline;
+        uint256 amountCollected;
+        string imageURL;
+        address[] contributors;
+        uint256[] donations;
+    }
+    
+    mapping(uint256 => Campaign) public campaigns;
+
+    uint256 public noOfCampaigns = 0;
+    //returns the id of the campaign
+    function createCampaign(address ownerAddress, string memory campaignTitle, string memory campaignDescription, uint256 campaignTarget, uint256 campaignDeadline, string memory imageForCampaign) public returns (uint256){
+        Campaign storage campaign = campaigns[noOfCampaigns];
+        //test if everything works
+        require(campaign.deadline < block.timestamp, "The deadline should be in the future");
+        campaign.creatorAddress = ownerAddress;
+        campaign.title = campaignTitle;
+        campaign.description = campaignDescription;
+        campaign.goalAmount = campaignTarget;
+        campaign.deadline = campaignDeadline;
+        campaign.amountCollected = 0;
+        campaign.imageURL = imageForCampaign;
+
+        noOfCampaigns++;
+        return noOfCampaigns -1;
+
+    }
+    function donateToCampaign(){}
+    //list of people that have donated to the campaign
+    function getDonators(){}
+    function getAllCampaigns(){}
 }
