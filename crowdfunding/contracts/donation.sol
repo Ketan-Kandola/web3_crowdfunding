@@ -49,6 +49,8 @@ contract donation {
     }
 
     //list of people that have donated to the campaign
-    function getDonators(){}
+    function getDonators(uint256 campaignID) view public returns(address[] memory, uint256[] memory){
+        return(campaigns[campaignID].contributors, campaigns[campaignID].donations)
+;    }
     function getAllCampaigns(){}
 }
