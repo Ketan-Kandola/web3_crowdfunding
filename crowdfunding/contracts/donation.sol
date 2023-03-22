@@ -17,6 +17,7 @@ contract donation {
     mapping(uint256 => Campaign) public campaigns;
 
     uint256 public noOfCampaigns = 0;
+    
     //returns the id of the campaign
     function createCampaign(address ownerAddress, string memory campaignTitle, string memory campaignDescription, uint256 campaignTarget, uint256 campaignDeadline, string memory imageForCampaign) public returns (uint256){
         Campaign storage campaign = campaigns[noOfCampaigns];
@@ -34,7 +35,19 @@ contract donation {
         return noOfCampaigns -1;
 
     }
-    function donateToCampaign(){}
+    function donateToCampaign(uint256 campaignID) public payable{
+        uint256 amount = msg.value;
+        Campaign storage campaign = campaigns[campaignID];
+
+        campaign.contributors.push(msg.sender); //push the address of the person that has donated
+        campaign.donations.push(amount);
+
+        (bool sent, ) = payable(campaign.creatorAddress).call{value: amount}(""); //lets us know if the transaction has been sent
+        if (sent) {
+            campaign.amountCollected = campaign.amountCollected + amount;
+        }  
+    }
+
     //list of people that have donated to the campaign
     function getDonators(){}
     function getAllCampaigns(){}
