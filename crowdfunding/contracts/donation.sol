@@ -50,7 +50,16 @@ contract donation {
 
     //list of people that have donated to the campaign
     function getDonators(uint256 campaignID) view public returns(address[] memory, uint256[] memory){
-        return(campaigns[campaignID].contributors, campaigns[campaignID].donations)
-;    }
-    function getAllCampaigns(){}
+        return(campaigns[campaignID].contributors, campaigns[campaignID].donations);
+    }
+    function getAllCampaigns()public view returns (Campaign[] memory){
+        Campaign[] memory allCampaigns = new Campaign[](noOfCampaigns); //creating an array with as many empty elements as actual campaigns 
+
+        for(uint i = 0; i < noOfCampaigns; i){
+            Campaign storage item = campaigns[i];
+            allCampaigns[i] = item;
+
+        return allCampaigns;
+        }
+    }
 }
