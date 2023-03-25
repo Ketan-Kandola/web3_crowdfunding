@@ -58,8 +58,7 @@ contract donation {
         for(uint i = 0; i < noOfCampaigns; i){
             Campaign storage item = campaigns[i];
             allCampaigns[i] = item;
-
-        return allCampaigns;
         }
+        return allCampaigns;
     }
 }
