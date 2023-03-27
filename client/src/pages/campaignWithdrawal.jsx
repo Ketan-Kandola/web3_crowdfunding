@@ -1,9 +1,9 @@
 import React from 'react'
 
-const campaignWithdrawals = () => {
+const campaignWithdrawal = () => {
   return (
-    <div>campaignWithdrawals</div>
+    <div>campaignWithdrawal</div>
   )
 }
 
-export default campaignWithdrawals
+export default campaignWithdrawal
