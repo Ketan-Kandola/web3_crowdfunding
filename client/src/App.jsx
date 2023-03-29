@@ -1,25 +1,23 @@
 import React from 'react'
 import {Route, Routes} from 'react-router-dom';
 
-import { CampaignDetails, Home, Profile, CampaignWithdrawals } from './pages';
-import { navbar } from './components';
+import { Navbar } from './components';
+import CreateProject from './components/CreateProject';
+import { CampaignDetails, Home, Profile, CampaignWithdrawal } from './pages';
 
 const App = () => {
   return (
     //tailwind utility classes
-    <div className="relative sm:-8 p-4 bg-[#13131a] min-h-screen flex flex-row">
+    <div className="relative sm:-8 p-4 bg-[#f2f2f2] min-h-screen flex flex-row">
       <div className="flex-1 max-sm:w-full max-w-[1280px] mx-auto sm:pr-5">
-        <navbar />
+        <Navbar />
+
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/create-campaign" element={<CreateCampaign />} />
-          <Route path="/campaign-details/:id" element={<CampaignDetails />} />
-          <Route path="/campaign-withdrawal/:id" element={<CampaignWithdrawals/>} />
-        </Routes>
+        </Routes>        
       </div>
-
     </div>
+    
   )
 }
 
