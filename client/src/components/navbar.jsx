@@ -50,7 +50,7 @@ const Navbar = () => {
           title={address ? 'Create a campaign' : 'Connect Wallet'}
           styles={address ? 'bg-[#10734F]' : 'bg-[#8c6dfd]'}
           handleClick={() => {
-            if(address) navigate('profile')
+            if(address) navigate('CreateCampaign')
             else 'connect()'
           }}
           />
