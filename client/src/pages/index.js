@@ -1,5 +1,5 @@
-export { default as Home } from './Home';
-export { default as Profile } from './Profile';
-export { default as CampaignDetails } from './CampaignDetails';
-export { default as CampaignWithdrawal } from './CampaignWithdrawal';
+export { default as Home } from './home';
+export { default as Profile } from './profile';
+export { default as CampaignDetails } from './campaignDetails';
+export { default as CampaignWithdrawal } from './campaignWithdrawal';
 export { default as CreateCampaign } from './CreateCampaign';

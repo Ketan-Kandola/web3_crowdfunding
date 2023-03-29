@@ -2,7 +2,7 @@ import React from 'react'
 
 const CampaignWithdrawal = () => {
   return (
-    <div>CampaignWithdrawal</div>
+    <div className="py-24">CampaignWithdrawal</div>
   )
 }
 
