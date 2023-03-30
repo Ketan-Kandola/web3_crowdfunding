@@ -20,7 +20,6 @@ const Navbar = () => {
   const navigate = useNavigate();
   const [isActive, setIsActive] = useState('home');
   const [toggleDrawer, setToggleDrawer] = useState(false);
-  //temporary address
   const {connect, address} = useStateContext();
   
 
