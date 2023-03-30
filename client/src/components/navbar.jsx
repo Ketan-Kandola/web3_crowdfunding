@@ -4,6 +4,7 @@ import {Link, useNavigate} from 'react-router-dom';
 import {logo, searchIcon, profilePic} from '../assets';
 import {navlinks} from '../constants';
 import {CustomButton} from './'
+import { useStateContext } from '../context';
 /*
 const Icon = ({ styles, name, imgUrl, isActive, disabled, handleClick }) => (
   <div className={`w-[48px] h-[48px] rounded-[10px] ${isActive && isActive === name && 'bg-[#2c2f32]'} flex justify-center items-center ${!disabled && 'cursor-pointer'} ${styles}`} onClick={handleClick}>
@@ -20,7 +21,8 @@ const Navbar = () => {
   const [isActive, setIsActive] = useState('home');
   const [toggleDrawer, setToggleDrawer] = useState(false);
   //temporary address
-  const address = '0xhfhsjbhdb';
+  const {connect, address} = useStateContext();
+  
 
   return (
     <header className="flex justify-between items-center p-5 bg-white shadow-lg fixed top-0 left-0 right-0">
@@ -51,7 +53,7 @@ const Navbar = () => {
           styles={address ? 'bg-[#10734F]' : 'bg-[#8c6dfd]'}
           handleClick={() => {
             if(address) navigate('CreateCampaign')
-            else 'connect()'
+            else connect()
           }}
           />
         <Link to="/profile">

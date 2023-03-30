@@ -21,7 +21,7 @@ const CreateCampaignForm = ({labelName, placeholder, inputType, isTextArea, valu
                 value={value}
                 onChange={handleChange}
                 type={inputType}
-                step="0.01"
+                step="0.1"
                 placeholder={placeholder}
                 className='py-[4px] sm:px-[25px] px-[15px] outline-none border-[1px] border-[#404040] bg-transparent font-rubik text-[#404040] text-[14px] placeholder:text-[#ADADAD] rounded-[8px] sm:min-w-[300px]'
             />
