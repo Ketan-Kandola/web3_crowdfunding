@@ -30,11 +30,52 @@ const CreateCampaign = () => {
 
             <form onSubmit={handleSubmit} className="w-full mt-[65px] flex flex-col gap-[30px]">
                 <div className="flex flex-wrap gap-[40px]">
-                    <CreateCampaignForm />
+                    <CreateCampaignForm 
+                        labelName="Your Name"
+                        placeholder="John Smith"
+                        inputType="text"
+                        value={form.name}
+                        handleChange = {() => {}}
+                    />
+                    <CreateCampaignForm 
+                        labelName="Campaign Title"
+                        placeholder="Enter the title of your campaign here"
+                        inputType="text"
+                        value={form.title}
+                        handleChange = {() => {}}
+                    />
                 </div>
-
-            </form>
-            
+                    <CreateCampaignForm 
+                        labelName="Campaign Description"
+                        placeholder="Please provide a description of the campaign you are launching, including the how it will be carried out and the intended impact."
+                        isTextArea
+                        value={form.description}
+                        handleChange = {() => {}}
+                    />
+                <div className="flex flex-wrap gap-[40px]">
+                    <CreateCampaignForm 
+                        labelName="Campaign Goal"
+                        placeholder="0.1 ETH"
+                        inputType="text"
+                        value={form.target}
+                        handleChange = {() => {}}
+                    />
+                    <CreateCampaignForm 
+                        labelName="Deadline"
+                        placeholder="Please enter the deadline for your campaign"
+                        inputType="date"
+                        value={form.deadline}
+                        handleChange = {() => {}}
+                    />
+                    <div className="flex justify-center items-center mt-[40px]">
+                        <CustomButton 
+                            btnType="submit"
+                            title="Create your new campaign"
+                            styles="bg-[#10734F]"
+                        />
+                    </div>
+                </div>
+            </form>     
         </div>
     )
 }
