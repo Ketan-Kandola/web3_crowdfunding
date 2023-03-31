@@ -11,7 +11,12 @@ import { useStateContext } from '../context';
 const CreateCampaign = () => {
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
+    // Use the useStateContext hook from the context.js file to get the createCampaign
+    // function which is used to create a new crowdfunding campaign on the blockchain.
     const {createCampaign} = useStateContext();
+    // Use the useState hook to define a state variable, form, and a function
+    // setForm that can be used to update the state of form. The form variable is an
+    // object that contains the values of the input fields in the form.
     const [form, setForm] = useState({
         name: '',
         title: '',
@@ -21,17 +26,30 @@ const CreateCampaign = () => {
         imageURL: ''
     });
 
+    /**
+     * Handle changes to the form input fields.
+     * @param {string} fieldName - The name of the field being changed.
+     * @param {object} e - The event object for the input field change.
+     */
     const handleFormChange = (fieldName, e) =>{
         setForm({ ...form, [fieldName]: e.target.value })
     };
 
+    /**
+     * Handle form submission to create a new crowdfunding campaign on the blockchain.
+     * @param {object} e - The event object for the form submission.
+     */
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+        
+        // Check if the provided image URL is valid.
         checkIfImage(form.imageURL, async(exists) => {
             if(exists) {
                 setIsLoading(true)
-                await createCampaign({ ...form, goalAmount: ethers.utils.parseUnits(form.goalAmount, 18)})
+                // Call the createCampaign function to create a new crowdfunding campaign
+                // on the blockchain with the data provided in the form.
+                await createCampaign([ form.name, form.title, form.description, {goalAmount: ethers.utils.parseUnits(form.goalAmount, 18)}, form.deadline, form.imageURL ]);
+                //await createCampaign({ ...form, goalAmount: ethers.utils.parseUnits(form.goalAmount, 18)}) //goalAmount is being parsed into units of ether. 18 in this case, which represents the number of decimal places in one ether.
                 setIsLoading(false);
                 navigate('/');
             } else {
@@ -40,7 +58,8 @@ const CreateCampaign = () => {
             } 
         })
     }
-
+    
+    // The CreateCampaign component renders a form with input fields for the user to fill out.
     return (
         <div className="flex justify-center items-center flex-col rounded-[10px] sm:p-10 p-4">
             {isLoading && 'loader'}
