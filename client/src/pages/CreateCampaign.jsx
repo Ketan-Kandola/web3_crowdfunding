@@ -16,9 +16,9 @@ const CreateCampaign = () => {
         name: '',
         title: '',
         description: '',
-        targetGoal: '', 
+        goalAmount: '', 
         deadline: '',
-        imageUrl: ''
+        imageURL: ''
     });
 
     const handleFormChange = (fieldName, e) =>{
@@ -28,15 +28,15 @@ const CreateCampaign = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        checkIfImage(form.imageUrl, async(exists) => {
+        checkIfImage(form.imageURL, async(exists) => {
             if(exists) {
                 setIsLoading(true)
-                await createCampaign({ ...form, target: ethers.utils.parseUnits(form.targetGoal, 18)})
+                await createCampaign({ ...form, goalAmount: ethers.utils.parseUnits(form.goalAmount, 18)})
                 setIsLoading(false);
                 navigate('/');
             } else {
                 alert('Provide valid image URL')
-                setForm({ ...form, imageUrl: '' });
+                setForm({ ...form, imageURL: '' });
             } 
         })
     }
@@ -77,8 +77,8 @@ const CreateCampaign = () => {
                         labelName="Campaign Goal"
                         placeholder="0.1 ETH"
                         inputType="text"
-                        value={form.targetGoal}
-                        handleChange = {(e) => handleFormChange('targetGoal', e)}
+                        value={form.goalAmount}
+                        handleChange = {(e) => handleFormChange('goalAmount', e)}
                     />
                     <CreateCampaignForm 
                         labelName="Deadline"
@@ -91,8 +91,8 @@ const CreateCampaign = () => {
                         labelName="Image URL"
                         placeholder="Please enter the url for the image"
                         inputType="url"
-                        value={form.imageUrl}
-                        handleChange = {(e) => handleFormChange('imageUrl', e)}
+                        value={form.imageURL}
+                        handleChange = {(e) => handleFormChange('imageURL', e)}
                     />
                 </div>
                 <div className="flex justify-center items-center mt-[40px]">

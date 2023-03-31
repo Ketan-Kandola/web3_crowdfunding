@@ -17,9 +17,9 @@ export const StateContextProvider = ({children}) => {
                 address,
                 form.title,
                 form.description,
-                form.targetGoal,
+                form.goalAmount,
                 new Date(form.deadline).getTime(),
-                form.imageUrl
+                form.imageURL
             ])
             console.log("contract call was successful", data)
         } catch (error) {

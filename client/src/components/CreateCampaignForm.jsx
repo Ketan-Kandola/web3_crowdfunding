@@ -7,7 +7,7 @@ const CreateCampaignForm = ({labelName, placeholder, inputType, isTextArea, valu
             <span className='font-rubik font-medium text-[16px] leading-[22px] text-[#0D0D0D] mb-[10px]'>{labelName}</span>
         )}
         {isTextArea ? (
-            <textArea
+            <textarea
                 required
                 value={value}
                 onChange={handleChange}
@@ -26,8 +26,7 @@ const CreateCampaignForm = ({labelName, placeholder, inputType, isTextArea, valu
                 className='py-[4px] sm:px-[25px] px-[15px] outline-none border-[1px] border-[#404040] bg-transparent font-rubik text-[#404040] text-[14px] placeholder:text-[#ADADAD] rounded-[8px] sm:min-w-[300px]'
             />
         )}
-    </label>
-    
+    </label> 
   )
 }
 
