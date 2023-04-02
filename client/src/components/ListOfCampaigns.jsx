@@ -20,9 +20,9 @@ const ListOfCampaigns = ({title, isLoading, campaigns}) => {
             <div className="flex flex-wrap mt-[18px] gap [8px]">
                 {!isLoading && campaigns.length ===0 && (
                     <p className="font-rubik font-medium text-[14px] leading[24px] text-[#404040]">
-                        There are currently no campaigns, please check back soon.  
-                        
+                        There are currently no campaigns, please check back soon. 
                     </p>
+                    
                 )}
                 {/* {!isLoading && campaigns.length === 0 && campaigns.map((campaign) => <CampaignCard
                     key={campaign.id}

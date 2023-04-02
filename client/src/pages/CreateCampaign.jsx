@@ -64,7 +64,7 @@ const CreateCampaign = () => {
         <div className="flex justify-center items-center flex-col rounded-[10px] sm:p-10 p-4">
             {isLoading && 'loader'}
             <div className="flex justify-center items center py-24 px-6">
-                <h1 className="font-epilogue font-light sm:text-[61px] text-[48px] leading-[38px] text-[#0D0D0D]">Start your Campaign</h1>
+                <h1 className="font-rubik font-light sm:text-[61px] text-[48px] leading-[38px] text-[#0D0D0D]">Start your Campaign</h1>
             </div>
 
             <form onSubmit={handleSubmit} className="w-full mt-[65px] flex flex-col gap-[30px]">

@@ -1,7 +1,8 @@
+//remember to rearrange the location of campaign card
 import React, {useState, useEffect} from 'react';
 
 import {useStateContext} from '../context';
-import { ListOfCampaigns } from '../components';
+import { CampaignCard, ListOfCampaigns } from '../components';
 
 const ViewCampaigns = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -15,7 +16,8 @@ const ViewCampaigns = () => {
         isLoading={isLoading}
         campaigns={campaigns}
       />
-      ViewCampaigns
+      ViewCampaigns list
+      <CampaignCard />
     </div>
   )
 }

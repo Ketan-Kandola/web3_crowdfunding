@@ -29,7 +29,7 @@ contract donation {
         campaign.goalAmount = campaignTarget;
         campaign.deadline = campaignDeadline;
         campaign.amountCollected = 0;
-        campaign.imageURL = imageForCampaign;
+        campaign.imageURL = imageForCampaign;  
 
         noOfCampaigns++;
         return noOfCampaigns -1;
