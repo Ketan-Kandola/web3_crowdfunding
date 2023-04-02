@@ -26,14 +26,13 @@ const Navbar = () => {
   return (
     <header className="flex justify-between items-center p-5 bg-white shadow-lg fixed top-0 left-0 right-0">
       <Link to="/" className="flex justify-start items-center text-xl text-black space-x-1">
-        
         <img src={logo} alt="logo" className="w-[156px] h-[52px] object-contain" />
-        
       </Link>
 
       <div className="hidden sm:block sm:ml-6">
       <div className="flex space-x-4">
         <a href="/">Home</a>
+        <a href="/ViewCampaigns">Campaigns</a>
         <a href="/profile">My Projects</a>
       </div>
       </div>
