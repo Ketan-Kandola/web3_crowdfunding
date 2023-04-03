@@ -15,7 +15,7 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/CreateCampaign" element={<CreateCampaign />} />
-          <Route path="/campaignDetails/:id" element={<CampaignDetails />} />
+          <Route path="/campaignDetails" element={<CampaignDetails />} />
           <Route path="/campaignWithdrawal/:id" element={<CampaignWithdrawal />} />
           <Route path="/ViewCampaigns" element={<ViewCampaigns />} />
         </Routes>        

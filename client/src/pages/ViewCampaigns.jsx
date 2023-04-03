@@ -16,7 +16,7 @@ const ViewCampaigns = () => {
         isLoading={isLoading}
         campaigns={campaigns}
       />
-      ViewCampaigns list
+      ViewCampaigns list below
       <CampaignCard />
     </div>
   )

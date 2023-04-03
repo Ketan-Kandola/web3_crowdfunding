@@ -48,8 +48,8 @@ const CreateCampaign = () => {
                 setIsLoading(true)
                 // Call the createCampaign function to create a new crowdfunding campaign
                 // on the blockchain with the data provided in the form.
-                await createCampaign([ form.name, form.title, form.description, {goalAmount: ethers.utils.parseUnits(form.goalAmount, 18)}, form.deadline, form.imageURL ]);
-                //await createCampaign({ ...form, goalAmount: ethers.utils.parseUnits(form.goalAmount, 18)}) //goalAmount is being parsed into units of ether. 18 in this case, which represents the number of decimal places in one ether.
+                //await createCampaign([ form.name, form.title, form.description, {goalAmount: ethers.utils.parseUnits(form.goalAmount, 18)}, form.deadline, form.imageURL ]);
+                await createCampaign({ ...form, goalAmount: ethers.utils.parseUnits(form.goalAmount, 18)}) //goalAmount is being parsed into units of ether. 18 in this case, which represents the number of decimal places in one ether.
                 setIsLoading(false);
                 navigate('/');
             } else {
