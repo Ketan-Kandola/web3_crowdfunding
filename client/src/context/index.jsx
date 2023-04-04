@@ -30,13 +30,39 @@ export const StateContextProvider = ({children}) => {
             console.log("contract call failed", error)
         }
     }
+
+    const getCampaigns = async () => {
+        const campaigns = await contract.call("getAllCampaigns");
+
+        const parsedCampaigns = campaigns.map((campaign, i) => ({
+            creatorAddress: campaign.creatorAddress,
+            title: campaign.title,
+            description: campaign.description,
+            goalAmount: ethers.utils.formatEther(campaign.goalAmount.toString()),
+            deadline: campaign.deadline.toNumber(),
+            amountCollected: ethers.utils.formatEther(campaign.amountCollected.toString()),
+            imageURL: campaign.imageURL,
+            pId: i
+        }));
+        return parsedCampaigns;
+    }
+
+    const getConnectedUserCampaigns = async () => {
+        const allCampaigns = await getCampaigns();
+        const filteredCampaigns = allCampaigns.filter((campaign) => campaign.creatorAddress === address);
+
+        return filteredCampaigns;
+    }
+
     return(
         <StateContext.Provider 
             value={{
                 address, 
-                contract, 
+                contract,
                 connect, 
-                createCampaign: publishCampaign
+                createCampaign: publishCampaign,
+                getCampaigns,
+                getConnectedUserCampaigns
             }}
         >
             {children}
