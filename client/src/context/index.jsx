@@ -6,7 +6,7 @@ const StateContext = createContext();
 
 export const StateContextProvider = ({children}) => {
     // the contract object for the smart contract deployed at the specified address.
-    const {contract} = useContract("0xad7fA4D78A6F7ec83B0cCf72fc4C653526317483");
+    const {contract} = useContract("0x89026b3C0cAcbeb10B4F01A9d2ea8e7eB930Fc5B");
     // create a function that can be used to call the createCampaign function on the contract object.
     const {mutateAsync: createCampaign} = useContractWrite(contract, "createCampaign");
 

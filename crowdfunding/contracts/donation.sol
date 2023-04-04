@@ -55,7 +55,7 @@ contract donation {
     function getAllCampaigns()public view returns (Campaign[] memory){
         Campaign[] memory allCampaigns = new Campaign[](noOfCampaigns); //creating an array with as many empty elements as actual campaigns 
 
-        for(uint i = 0; i < noOfCampaigns; i){
+        for(uint i = 0; i < noOfCampaigns; i++){
             Campaign storage item = campaigns[i];
             allCampaigns[i] = item;
         }
