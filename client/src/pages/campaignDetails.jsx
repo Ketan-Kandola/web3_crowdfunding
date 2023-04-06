@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {useLocation} from 'react-router-dom';
+import {useLocation, useNavigate} from 'react-router-dom';
 import {ethers} from 'ethers';
 
 
@@ -10,6 +10,7 @@ import {daysLeft} from '../utils';
 
 const CampaignDetails = () => {
   const {state} = useLocation();
+  const navigate = useNavigate();
   const {getCampaignDonations, contract, address, contribute} = useStateContext();
   const [isLoading, setIsLoading] = useState(false);
   const [amount, setAmount] = useState('');
