@@ -1,6 +1,15 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
+
 import CampaignCard from './CampaignCard';
+
+/**
+ * Displays a list of campaigns.
+ * @param {string} title - The title to be displayed at the top of the component.
+ * @param {boolean} isLoading - A flag indicating whether campaigns are still loading.
+ * @param {Array} campaigns - An array of campaign objects.
+ * @returns {JSX.Element}
+ */
 
 const ListOfCampaigns = ({title, isLoading, campaigns}) => {
     const navigate = useNavigate();

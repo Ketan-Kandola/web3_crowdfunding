@@ -1,3 +1,8 @@
+/*
+  The Navbar component is responsible for rendering the top navigation bar of the application.
+  It contains links to different pages, a search bar, and a button to create a campaign or connect to a wallet.
+*/
+
 import React, {useState} from 'react';
 import {Link, useNavigate} from 'react-router-dom';
 
@@ -5,17 +10,7 @@ import {logo, searchIcon, profilePic} from '../assets';
 import {navlinks} from '../constants';
 import {CustomButton} from './'
 import { useStateContext } from '../context';
-/*
-const Icon = ({ styles, name, imgUrl, isActive, disabled, handleClick }) => (
-  <div className={`w-[48px] h-[48px] rounded-[10px] ${isActive && isActive === name && 'bg-[#2c2f32]'} flex justify-center items-center ${!disabled && 'cursor-pointer'} ${styles}`} onClick={handleClick}>
-    {!isActive ? (
-      <img src={imgUrl} alt="fund_logo" className="w-1/2 h-1/2" />
-    ) : (
-      <img src={imgUrl} alt="fund_logo" className={`w-1/2 h-1/2 ${isActive !== name && 'grayscale'}`} />
-    )}
-  </div>
-)
-*/
+
 const Navbar = () => {
   const navigate = useNavigate();
   const [isActive, setIsActive] = useState('home');

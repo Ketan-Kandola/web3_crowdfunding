@@ -1,3 +1,8 @@
+/*This is the layout for the boxes on campaign details page where it
+takes two props, title and value, and returns a box element with the value
+displayed at the center and the title displayed below it. 
+When using this component in the campaign details page I can pass props to
+customise the content of the box. */
 import React from 'react'
 
 const Box = ({title, value}) => {

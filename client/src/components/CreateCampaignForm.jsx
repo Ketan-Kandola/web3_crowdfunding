@@ -1,3 +1,14 @@
+/**
+ * CreateCampaignForm component displays a form input field with a label and placeholder text
+ *
+ * @param {string} labelName - The name of the label.
+ * @param {string} placeholder - The placeholder text of the input field.
+ * @param {string} inputType - The type of input field, can be text, number, etc.
+ * @param {boolean} isTextArea - A boolean value to indicate if input is text area or not.
+ * @param {string} value - The value of the input field.
+ * @param {function} handleChange - A function to handle input field changes.
+ * @returns {JSX.Element} A label containing an input field with the specified properties.
+ */
 import React from 'react'
 
 const CreateCampaignForm = ({labelName, placeholder, inputType, isTextArea, value, handleChange}) => {

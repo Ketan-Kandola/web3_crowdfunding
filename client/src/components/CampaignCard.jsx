@@ -3,6 +3,15 @@ import React from 'react'
 import {daysLeft} from '../utils';
 import {profilePic} from '../assets';
 
+// @desc: This component displays a campaign card with details such as title, goal amount, deadline, amount collected, image URL, and creator details
+// @params: creatorAddress - the address of the campaign creator, 
+          // title - the title of the campaign, 
+          // goalAmount - the funding goal amount of the campaign, 
+          // deadline - the deadline of the campaign, 
+          // amountCollected - the amount of funds raised for the campaign, 
+          // imageURL - the URL of the image associated with the campaign, 
+          // handleClick - the click handler for the campaign card
+
 const CampaignCard = ({creatorAddress, title, goalAmount, deadline, amountCollected, imageURL, handleClick}) => {
   const remainingDaysOfCampaign = daysLeft(deadline);
 
