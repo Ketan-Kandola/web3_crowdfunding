@@ -1,4 +1,4 @@
-//nav links
+//nav links array
 import {logo} from '../assets';
 
 export const navlinks = [
