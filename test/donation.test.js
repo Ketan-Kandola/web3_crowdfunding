@@ -56,7 +56,7 @@ describe("Donation contract", function() {
         it("should update the campaign", async function() {
             const campaignTitle = "Updated Campaign";
             const campaignDescription = "This is an updated campaign";
-            const imageForCampaign = "https://example.com/updated.png";
+            const imageForCampaign = "https://cdn.cheapoguides.com/wp-content/uploads/sites/4/2020/05/iStock-vegggies-808246770-1024x600.jpg";
             const result = await donation.updateCampaign(campaignID, campaignTitle, campaignDescription, imageForCampaign);
             expect(result).to.be.true;
             const campaign = await donation.campaigns(campaignID);
@@ -113,22 +113,76 @@ describe("Donation contract", function() {
         });
     });
 
-    describe("createWithdrawalRequest", function() {
-        it("should create a new withdrawal request", async function() {
-            const campaignId = campaignID;
+    describe("createWithdrawRequest", function() {
+        it("should fail if someone else tries to request (only owner can make request)", async function() {
+            // Set up the function parameters
             const requestDescription = "Withdraw Request";
             const requestAmount = ethers.utils.parseEther("0.5");
-            const recipient = await ethers.getSigner(0).getAddress();
-            const requestId = await donation.createWithdrawalRequest(campaignId, requestDescription, requestAmount, recipient);
-            expect(requestId).to.equal(0);
+            const recipient = await ethers.getSigner(1).getAddress();
+            
+            // Call the function and expect it to revert
+            await expect(contract.connect(accounts[1]).createWithdrawRequest(requestDescription, requestAmount, recipient)).to.be.revertedWith("Only the owner can create a withdrawal request");
         });
-    });
+
+        it("should create a new withdrawal request", async function() {
+          // Set up the function parameters
+          const requestDescription = "Withdraw Request";
+          const requestAmount = ethers.utils.parseEther("0.5");
+          const recipient = await ethers.getSigner(0).getAddress();
+      
+          // Call the function and get the transaction response
+          const tx = await contract.createWithdrawRequest(requestDescription, requestAmount, recipient);
+      
+          // Check the emitted event to ensure the request was created correctly
+          const withdrawRequestCreatedEvent = tx.events.find(
+            (event) => event.event === "WithdrawRequestCreated"
+          );
+          expect(withdrawRequestCreatedEvent.args[0]).to.equal(0);
+          expect(withdrawRequestCreatedEvent.args[1]).to.equal(requestDescription);
+          expect(withdrawRequestCreatedEvent.args[2]).to.equal(requestAmount);
+          expect(withdrawRequestCreatedEvent.args[3]).to.equal(0);
+          expect(withdrawRequestCreatedEvent.args[4]).to.be.false;
+          expect(withdrawRequestCreatedEvent.args[5]).to.equal(recipient);
+        });
+      });
     describe("voteWithdrawRequest", function() {
+        it("should fail if the voter is not a contributor", async function() {
+            // Set up the function parameters
+            const requestId = 0;
+        
+            // Call the function to vote on the request with a non-contributor account, but expect it to revert
+            await expect(contract.connect(accounts[2]).voteWithdrawRequest(requestId)).to.be.revertedWith("Only contributors can vote on withdrawal requests");
+            
+            // Check that the vote was not recorded
+            const withdrawRequest = await contract.campaignWithdrawRequests(requestId);
+            expect(withdrawRequest.noOfVotes).to.equal(0);
+        });
         it("should allow a user to vote on a withdrawal request", async function() {
             const requestId = 0;
             const result = await donation.voteWithdrawRequest(requestId);
             expect(result).to.be.true;
+    
             const withdrawRequest = await donation.campaignWithdrawRequests(requestId);
+            expect(withdrawRequest.noOfVotes).to.equal(1);
+    
+            // Attempt to vote again on the same withdrawal request
+            const result2 = await donation.voteWithdrawRequest(requestId);
+            expect(result2).to.be.false;
+            const withdrawRequest2 = await donation.campaignWithdrawRequests(requestId);
+            expect(withdrawRequest2.noOfVotes).to.equal(1);
+        });
+        it("should fail if the request has already been voted on", async function() {
+            // Set up the function parameters
+            const requestId = 0;
+        
+            // Call the function to vote on the request
+            await contract.connect(accounts[1]).voteWithdrawRequest(requestId);
+        
+            // Call the function again to vote on the same request, but expect it to revert
+            await expect(contract.connect(accounts[1]).voteWithdrawRequest(requestId)).to.be.revertedWith("Withdraw request has already been voted on");
+            
+            // Check that the vote was not recorded again
+            const withdrawRequest = await contract.campaignWithdrawRequests(requestId);
             expect(withdrawRequest.noOfVotes).to.equal(1);
         });
     });
@@ -150,6 +204,13 @@ describe("Donation contract", function() {
             // Vote on the withdrawal request
             await donation.voteWithdrawRequest(requestId, { from: donor1Address });
             await donation.voteWithdrawRequest(requestId, { from: donor2Address });
+            
+            // Ensure that at least 50% of contributors have voted before allowing withdrawal
+            const campaign = await donation.campaigns(campaignId);
+            const totalContributions = campaign.totalContributions;
+            const requiredVotes = Math.floor(totalContributions / 2) + 1;
+            const numVotes = await donation.getNumVotes(requestId);
+            assert.isAtLeast(numVotes, requiredVotes, "Withdrawal request cannot be completed until at least 50% of contributors have voted");
 
             // Withdraw the requested amount
             await donation.withdrawRequestedAmount(requestId, campaignId, { from: ownerAddress });

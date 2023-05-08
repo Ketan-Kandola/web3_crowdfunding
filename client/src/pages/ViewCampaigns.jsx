@@ -1,4 +1,3 @@
-//remember to rearrange the location of campaign card
 import React, {useState, useEffect} from 'react';
 
 import {useStateContext} from '../context';

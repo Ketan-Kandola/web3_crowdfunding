@@ -77,6 +77,83 @@ export const StateContextProvider = ({children}) => {
           return parsedDonations;
     }
 
+    // Request for withdraw amount
+    const requestWithdrawAmount = async (data, onSuccess, onError) => {
+        const { web3, contractAddress, description, amount, recipient, account } = data;
+        const projectConnector = new web3.eth.Contract(Project.abi, contractAddress);
+
+        try {
+            const tx = await projectConnector.methods.createWithdrawRequest(description, amount, recipient).send({ from: account });
+            const withdrawReqReceipt = tx.events.WithdrawRequestCreated.returnValues;
+            const formattedReqData = formatWithdrawRequestData(withdrawReqReceipt, withdrawReqReceipt.requestId);
+            onSuccess(formattedReqData);
+        } catch (error) {
+            onError(error.message);
+        }
+    };
+
+    const formatWithdrawRequestData = (reqData) => {
+        return {
+            requestId: reqData.requestId,
+            description: reqData.description,
+            amount: ethers.utils.formatEther(reqData.amount.toString()),
+            recipient: reqData.recipient,
+            creator: reqData.creator,
+            approvalCount: reqData.approvalCount,
+            rejected: reqData.rejected,
+        };
+    };
+    
+
+    // Get all withdraw requests
+    const getAllWithdrawRequests = async (web3, contractAddress, onLoadRequests) => {
+        const projectConnector = new web3.eth.Contract(Project.abi, contractAddress);
+        const withdrawRequestCount = await
+        projectConnector.methods.numOfWithdrawRequests().call();
+        const withdrawRequests = [];
+
+        if (withdrawRequestCount <= 0) {
+            onLoadRequests(withdrawRequests);
+            return;
+        }
+
+        for (let i = 1; i <= withdrawRequestCount; i++) {
+            const req = await projectConnector.methods.withdrawRequests(i - 1).call();
+            withdrawRequests.push(formatWithdrawRequestData({ ...req, requestId: i - 1 }));
+        }
+
+        onLoadRequests(withdrawRequests);
+    };
+
+    // Vote for withdraw request
+    const voteWithdrawRequest = async (data, onSuccess, onError) => {
+        const { web3, contractAddress, reqId, account } = data;
+        const projectConnector = new web3.eth.Contract(Project.abi, contractAddress);
+
+        try {
+            const tx = await projectConnector.methods.voteWithdrawRequest(reqId).send({ from: account });
+            console.log(tx);
+            onSuccess();
+        } catch (error) {
+            onError(error.message);
+        }
+    };
+
+    // Withdraw requested amount
+    const withdrawRequestedAmount = async (data, onSuccess, onError) => {
+        const { web3, contractAddress, reqId, account, amount } = data;
+        const projectConnector = new web3.eth.Contract(Project.abi, contractAddress);
+
+        try {
+            const tx = await projectConnector.methods.withdrawRequestedAmount(reqId).send({ from: account });
+            console.log(tx);
+            dispatch(actions.withdrawContractBalance({ contractAddress: contractAddress, withdrawAmount: amount }));
+            onSuccess();
+        } catch (error) {
+            onError(error.message);
+        }
+    };
+
     return(
         <StateContext.Provider 
             value={{

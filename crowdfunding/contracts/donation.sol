@@ -40,6 +40,17 @@ contract donation {
     }
 
     event actionPerformed (uint256 actionId, string actionType, address indexed performer, uint256 timestamp);
+    
+    event WithdrawRequestCreated(
+        uint256 requestId,
+        string description,
+        uint256 amount,
+        uint256 noOfVotes,
+        bool isCompleted,
+        address reciptent
+    );
+
+    event voteOnWithdraw(address voter, uint totalVotes);
 
     event amountWithdrawnSuccessful(
         uint256 withdrawRequestId,
@@ -50,14 +61,12 @@ contract donation {
         address reciptent
     );
 
-    event voteOnWithdraw(address voter, uint totalVotes);
-
     mapping(uint256 => Campaign) public campaigns;
     mapping(uint256 => supporterStruct[]) supporterOfCampaign;
     mapping (uint256 => campaignWithdrawRequest) public campaignWithdrawRequests;
 
     uint256 public noOfCampaigns = 0;
-
+    uint256 public numOfWithdrawRequests = 0;
     /*
     * A function to create a new campaign
     * @param ownerAddress: The Ethereum address of the campaign owner
@@ -243,6 +252,19 @@ contract donation {
         campaigns[campaignID].status = campaignStatus.reverse;
         refund(campaignID);
         return true;
+    }
+
+    function createWithdrawRequest(string memory _description,uint256 _amount,address payable _recipient) public {
+        campaignWithdrawRequest storage newRequest = campaignWithdrawRequests[numOfWithdrawRequests];
+        numOfWithdrawRequests++;
+
+        newRequest.requestDescription = _description;
+        newRequest.amount = _amount;
+        newRequest.noOfVotes = 0;
+        newRequest.isCompleted = false;
+        newRequest.recipient = _recipient;
+
+        emit WithdrawRequestCreated(numOfWithdrawRequests,_description, _amount,0,false,_recipient );
     }
 
     /*

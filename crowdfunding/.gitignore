@@ -8,4 +8,7 @@ typechain-types
 #Hardhat files
 cache
 artifacts
+eth-gas-report.txt
+matic-gas-report.txt
+avalanche-gas-report.txt
 
