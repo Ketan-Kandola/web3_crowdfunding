@@ -110,8 +110,9 @@ const CampaignDetails = () => {
           <h4 className="font-rubik font-regular text-[42px] text-[#0D0D0D]">Donations</h4>
           <div className="mt-[20px] flex flex-col gap-4">
             {contributors.length > 0 ? contributors.map((item, index) => (
-              <div>
-                donator
+              <div key={`${item.donator}-${index}`} className="flex justify-between items-center gap-4">
+                <p className="font-rubik font-normal text-[16px] text-[#ADADAD] leading-[26px] break-ll">{index + 1}. {item.donator}</p>
+                <p className="font-rubik font-normal text-[16px] text-[#000000] leading-[26px] break-ll">{item.donation}</p>
               </div>
             )) : (
               <p>
